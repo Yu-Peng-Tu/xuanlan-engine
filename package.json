@@ -1,0 +1,22 @@
+{
+  "name": "xuanlan-layered-engine-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "个人技术项目：把实时分层叙事引擎做成产品级落地页，含实时 Demo、213 条自动断言与逐项验证记录",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check": "node scripts/check.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "vite": "6.3.5"
+  }
+}

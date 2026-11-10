@@ -1,0 +1,85 @@
+{
+  "note": "逐文件资产清单。哈希与字节数为本包内文件实测值。五张纹理不是从外部下载的分层素材，而是由本包生成成片程序化派生，因此像素级同源对齐。",
+  "captured_at": "2026-11-10 00:12~00:45 CST",
+  "generation": {
+    "main_visual": "本项目使用图像生成工具产生的一张原创概念成片：青衣剑客侧身立于断崖残台之上，银白披风向右侧展开，身后为破云而下的天光、翻涌云海与悬浮的东方楼阁。未使用任何第三方作品素材或既有角色形象。",
+    "derivation": "五张 2048×1152 资产由同一张成片派生：前景总蒙版取「人物」与「披风」两块轮廓的并集，保证三层叠加后能完整还原成片；披风 / 人物按互补权重切成两张 RGBA；远景底板的前景区域在 72×40 低分辨率上做扩散填充、注入同图云絮高频后放大柔化，并按行亮度补偿；深度图由两层 alpha 编码 R/B 通道并着色。",
+    "recomposition_check": "按 alpha 顺序叠加 远景 → 披风 → 人物，与成片的平均绝对像素误差为 0.93/255（约 0.36%）。",
+    "script_location": "派生脚本为一次性临时工具，未随项目交付；完整步骤、参数口径与提示词摘要记录在 evidence/VALIDATION.md。"
+  },
+  "assets": [
+    {
+      "file": "xuanlan-background-clean.webp",
+      "path": "public/textures/xuanlan-background-clean.webp",
+      "bytes": 458940,
+      "sha256": "11b8cea730d09b4b15c6e968a223d613b2946cf86157d933165b2c549acf5b8f",
+      "format": "WebP 2048x1152 RGB（无 alpha）",
+      "role": "远景底板：破云天光、翻涌云海、悬浮东方楼阁与群山；前景区域以扩散填充 + 云絮细节注入柔化修补",
+      "origin": "本包派生：源成片为本项目用图像生成工具产生的原创概念图",
+      "derivation": "低分辨率扩散填充 → 云絮细节平铺注入 → 放大柔化 → 逐行亮度补偿 → 28px 羽化回贴",
+      "license": "个人技术演示；平台商用条款待确认"
+    },
+    {
+      "file": "xuanlan-cape.webp",
+      "path": "public/textures/xuanlan-cape.webp",
+      "bytes": 268266,
+      "sha256": "4769afc70dca601cfdcd78542033e5784ee4438817ae9a4e201cc0c4fefc808c",
+      "format": "WebP 2048x1152 RGBA",
+      "role": "中景层：向右展开的银白半透明披风与飘带褶皱，透明通道勾出轮廓",
+      "origin": "本包派生：源成片为本项目用图像生成工具产生的原创概念图",
+      "derivation": "披风轮廓蒙版 × 高频/冷色权重，披风专属区优先归本层，RGB 取自成片",
+      "license": "个人技术演示；平台商用条款待确认"
+    },
+    {
+      "file": "xuanlan-body.webp",
+      "path": "public/textures/xuanlan-body.webp",
+      "bytes": 243320,
+      "sha256": "9c71a03531636d6f2d28e412609ce668243e6f942188adad9da2d1e9edfc5609",
+      "format": "WebP 2048x1152 RGBA",
+      "role": "近景层：青衣剑客侧身、战甲、长发与斜持长剑",
+      "origin": "本包派生：源成片为本项目用图像生成工具产生的原创概念图",
+      "derivation": "人物轮廓蒙版 × 暗部权重，扣掉披风权重，人物区优先归本层，RGB 取自成片",
+      "license": "个人技术演示；平台商用条款待确认"
+    },
+    {
+      "file": "xuanlan-background-depth.png",
+      "path": "public/textures/xuanlan-background-depth.png",
+      "bytes": 333703,
+      "sha256": "5cb9a044b8434ac3ab52909d062845479f3550f25d398e0936795ecbd5ae1255",
+      "format": "PNG 2048x1152 8-bit RGB（伪彩色分段编码）",
+      "role": "层分割编码图（绿=远景 / 红=人物 / 紫=披风）；R=粗略分层，B=披风自由度，非物理深度",
+      "origin": "本包派生：源成片为本项目用图像生成工具产生的原创概念图",
+      "derivation": "由披风 / 人物 alpha 生成 R（分层）与 B（披风自由度）通道，并着色为绿/红/紫",
+      "license": "个人技术演示；平台商用条款待确认"
+    },
+    {
+      "file": "xuanlan-cinematic-clean.jpg",
+      "path": "public/textures/xuanlan-cinematic-clean.jpg",
+      "bytes": 894531,
+      "sha256": "dba852fae80b57693866935ef3b2f4c02b43f1a1894328310d94d3c6390be095",
+      "format": "JPEG 2048x1152 RGB",
+      "role": "生成成片：静态首帧 / WebGL 失败的降级画面，同时作为 uPlate 近景保真输入",
+      "origin": "本包派生：源成片为本项目用图像生成工具产生的原创概念图",
+      "derivation": "生成成片裁切为 16:9 后缩放，作为五张资产的共同像素源",
+      "license": "个人技术演示；平台商用条款待确认"
+    },
+    {
+      "file": "favicon.svg",
+      "path": "public/favicon.svg",
+      "bytes": 154,
+      "sha256": "0921bc3b6609538db6034795762a4136fd2166a81e46c05c16d5a41492c4ce1b",
+      "width": 64,
+      "height": 64,
+      "format": "SVG 64x64",
+      "role": "站点图标",
+      "origin": "项目内绘制的矢量图标",
+      "license": "项目自有"
+    }
+  ],
+  "disclosure": {
+    "main_visual": "AI 生成概念成片，人物 / 战甲 / 披风 / 楼阁 / 云海均由图像生成，非项目代码原创绘制，也不主张为作者手绘",
+    "code_original_scope": "三层合成 Shader、刚性视差、章节状态机、近景/焦点、图层解构、静态降级、自动检查、资产派生流程与页面排版",
+    "license_status": "素材为本项目自行生成，未引入第三方作品；生成平台对输出物的商用条款仍待确认，故不作可商用或已获授权的表述",
+    "not_claimed": "不声称任何素材已获商用授权、不声称分层为原始独立绘制资产、不声称存在真实客户或商业合作"
+  }
+}

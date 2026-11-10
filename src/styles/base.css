@@ -1,0 +1,165 @@
+/* 基础层：设计令牌、重置、排版、按钮、可访问性。
+   字体全部使用系统栈，不引入外部字体/CDN，保证 dist/ 独立可托管。 */
+
+:root {
+  --ink: #0b0c10;
+  --ink-2: #12141a;
+  --paper: #f2ede3;
+  --paper-dim: #cfc7b8;
+  --gold: #d8a94b;
+  --gold-soft: #e6c98a;
+  --red: #9d2b25;
+  --line: rgba(242, 237, 227, 0.16);
+  --line-dark: rgba(18, 20, 26, 0.14);
+  --serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", "SimSun", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+  --mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --pad: clamp(1.25rem, 5vw, 6rem);
+  --maxw: 1440px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--paper);
+  background: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, p, dl, dd, figure, ol, ul { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+
+a { color: inherit; text-decoration: none; }
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 999;
+  padding: 0.6rem 1rem;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 2px;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+.skip-link:focus { transform: translateY(0); }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.stop { color: var(--gold); }
+
+.section-kicker,
+.eyebrow,
+.chapter-kicker,
+.panel-kicker,
+.footer-label,
+.hero-format,
+.hero-tags,
+.hero-coordinate,
+.asset-facts span,
+.layer-id,
+.process-list small,
+.chapter-num,
+.deconstruct-hint,
+.render-status {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* 通用按钮：语义化 <button>，触屏与键盘都可用 */
+button {
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 1px;
+  padding: 0.62rem 1.05rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  transition: background-color 0.24s var(--ease), border-color 0.24s var(--ease), color 0.24s var(--ease), transform 0.24s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+button:hover { border-color: var(--gold); background: rgba(216, 169, 75, 0.09); }
+button:active { transform: translateY(1px); }
+button.is-active {
+  border-color: var(--gold);
+  background: rgba(216, 169, 75, 0.16);
+  color: var(--gold-soft);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  background: transparent !important;
+}
+.text-link:hover { color: var(--gold); border-color: var(--gold); }
+.text-link.light { color: var(--paper); }
+
+kbd {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  color: var(--gold-soft);
+  background: rgba(216, 169, 75, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+/* 减少动态：所有过渡与平滑滚动即时生效，章节切换为静态切换 */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}

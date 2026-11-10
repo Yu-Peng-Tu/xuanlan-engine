@@ -1,0 +1,115 @@
+{
+  "captured_at": "2026/11/10 00:35:24",
+  "environment": "macOS / Chrome headless + CDP / 静态托管 dist/ (python3 http.server)",
+  "target": "http://127.0.0.1:8123/",
+  "desktop": {
+    "title": "玄览引擎 · 产品化能力演示 | 个人技术项目",
+    "debugGlobal": "undefined",
+    "sectionIds": [
+      "why",
+      "product",
+      "demo",
+      "layers",
+      "specs",
+      "scenarios",
+      "delivery",
+      "verify"
+    ],
+    "briefColumns": 3,
+    "metricCount": 5,
+    "assertMetric": "213",
+    "assertMetricAll": [
+      "3",
+      "5",
+      "213",
+      "0",
+      "3"
+    ],
+    "specRows": 9,
+    "abilityCards": 4,
+    "demoSteps": 4,
+    "ctas": [
+      "#demo",
+      "#verify",
+      "#verify",
+      "#verify",
+      "#demo",
+      "#demo"
+    ],
+    "mailtoCount": 0,
+    "forbiddenHits": [],
+    "positioning": {
+      "personal": true,
+      "noBusinessEntity": true,
+      "untested": true,
+      "licensePending": true,
+      "generatedVisual": true,
+      "derivedAssets": true
+    },
+    "verifyCommand": true,
+    "h1FontSize": "95.04px",
+    "pageHeight": 12442,
+    "bodyChars": 5311,
+    "horizontalOverflow": 0,
+    "snapshot": {},
+    "webgl": "available",
+    "webglAfterSettle": {
+      "webgl": "available",
+      "snapshotWebglAvailable": true,
+      "stageReady": true,
+      "debugGlobal": "undefined"
+    }
+  },
+  "interactions": {
+    "zoomBefore": 1,
+    "zoomAfterChapter3": 1.52,
+    "chapterSnapshot": {
+      "chapterIndex": 2,
+      "chapterId": "guard",
+      "chapterLabel": "当关",
+      "view": "panorama",
+      "focus": "figure",
+      "mode": "composed",
+      "soloLayer": null,
+      "depthOverlay": false,
+      "reducedMotion": false,
+      "webglAvailable": true,
+      "zoom": 1.52,
+      "focusPlane": 0.94,
+      "farBlur": 0.0032,
+      "separation": 0,
+      "layerOpacity": {
+        "far": 1,
+        "cape": 1,
+        "figure": 1
+      }
+    },
+    "mode": "deconstruct",
+    "separation": 1,
+    "layerImages": 4
+  },
+  "mobile390": {
+    "h1FontSize": "46.8px",
+    "horizontalOverflow": 0,
+    "briefColumns": 1,
+    "ctaVisible": true,
+    "bodyChars": 5280,
+    "scrollY": 0
+  },
+  "nojs": {
+    "bodyChars": 5265,
+    "posterVisible": true,
+    "cssLinked": 1,
+    "untestedRowPresent": true,
+    "boundaryPresent": true
+  },
+  "screenshots": [
+    "hero.png",
+    "product.png",
+    "specs.png",
+    "verify.png",
+    "layers.png",
+    "mobile-390.png",
+    "dist-nojs.png"
+  ]
+}

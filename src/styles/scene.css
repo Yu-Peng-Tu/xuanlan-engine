@@ -1,0 +1,116 @@
+/* 场景层：静态首帧、WebGL 画布、图层解构栈、深度分段叠加。 */
+
+.hero-poster,
+#scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-poster {
+  z-index: 1;
+  /* 章节镜头在静态降级下也改变可观测构图 */
+  transform: scale(var(--camera-zoom, 1)) translate(var(--camera-x, 0), var(--camera-y, 0));
+  transition: transform 0.9s var(--ease), opacity 0.6s var(--ease);
+  transform-origin: 50% 45%;
+}
+#scene-canvas {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease);
+  cursor: pointer;
+  touch-action: pan-y;
+}
+/* WebGL 就绪后，画布淡入覆盖静态海报；画布本身渲染完整成片，不会露底 */
+.hero-stage.is-webgl-ready #scene-canvas { opacity: 1; }
+.hero-stage.is-fallback #scene-canvas { opacity: 0; pointer-events: none; }
+.hero-stage.is-fallback .hero-poster { opacity: 1; }
+
+.hero-shade {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(6, 8, 12, 0.82) 0%, rgba(6, 8, 12, 0.34) 42%, rgba(6, 8, 12, 0.02) 76%),
+    linear-gradient(0deg, rgba(6, 8, 12, 0.84) 0%, transparent 38%, rgba(6, 8, 12, 0.28) 100%);
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* 图层解构：三层真实纹理叠成一个栈，状态机驱动分离位移与 solo */
+.layer-stack {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  min-height: 260px;
+  isolation: isolate;
+}
+.d-layer {
+  position: relative;
+  margin: 0;
+  background: #16181e;
+  border: 1px solid var(--line-dark);
+  overflow: hidden;
+  transform: translate(var(--tx, 0), var(--ty, 0)) scale(var(--scale, 1));
+  opacity: var(--layer-op, 1);
+  transition: transform 0.75s var(--ease), opacity 0.5s var(--ease), box-shadow 0.4s var(--ease);
+  z-index: 1;
+}
+.d-layer img {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  /* 浅色透明棋盘：暗色素材与 alpha 区域都能一眼分辨，类似图像编辑器 */
+  background-color: #b9b3a6;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.18) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.18) 75%),
+    linear-gradient(45deg, rgba(255,255,255,.18) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.18) 75%);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px;
+  mix-blend-mode: normal;
+}
+.d-layer:first-child img { background-color: #b9b3a6; }
+.d-layer figcaption {
+  display: grid; gap: 0.2rem;
+  padding: 0.8rem 0.9rem;
+  background: rgba(11, 12, 16, 0.9);
+  color: var(--paper);
+}
+.d-layer-no { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--gold-soft); }
+.d-layer figcaption strong { font-size: 0.84rem; font-weight: 500; letter-spacing: 0.05em; }
+.d-layer.is-solo { box-shadow: 0 0 0 2px var(--red); z-index: 3; }
+.d-layer.is-dim { filter: saturate(0.4); }
+.d-layer.is-missing img { min-height: 120px; }
+.d-layer.is-missing::after {
+  content: "图层资源未载入";
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  background: rgba(11,12,16,0.9); color: var(--gold-soft);
+  font-size: 0.8rem; letter-spacing: 0.08em;
+}
+
+/* 解构模式：三层沿水平方向真实拉开（状态机 separation=1） */
+#app[data-mode="deconstruct"] .layer-stack { gap: 2.2rem; }
+#app[data-mode="deconstruct"] .d-layer { box-shadow: 0 18px 45px rgba(11, 12, 16, 0.35); }
+#app[data-mode="composed"] .d-layer { transform: none; opacity: 1; }
+
+.depth-overlay {
+  max-width: var(--maxw);
+  margin: 1.4rem auto 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line-dark);
+}
+.depth-overlay[hidden] { display: none; }
+.show-depth .layer-stack { opacity: 0.35; }
+
+/* 减少动态：解构切换即时，不做位移动画 */
+@media (prefers-reduced-motion: reduce) {
+  .d-layer, .hero-poster, .chapter-stage img, .chapter-card { transition: none !important; }
+  .d-layer { transform: none; }
+}
+html[data-reduced-motion="true"] .d-layer { transform: none !important; }

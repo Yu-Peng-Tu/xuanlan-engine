@@ -1,0 +1,42 @@
+[
+  {
+    "case": "case1",
+    "description": "删除关键纹理 xuanlan-body.webp",
+    "exit": 1,
+    "failed_assertions": [
+      "- 关键纹理缺失: public/textures/xuanlan-body.webp"
+    ]
+  },
+  {
+    "case": "case2",
+    "description": "删除入口 index.html",
+    "exit": 1,
+    "failed_assertions": [
+      "- index.html 缺失",
+      "- 页面标题未表明「个人项目 / 能力演示」定位",
+      "- 缺少静态首帧 <img> 兜底",
+      "- 产品页缺少区块: #why",
+      "- 产品页缺少区块: #product",
+      "- 产品页缺少区块: #demo",
+      "- 产品页缺少区块: #layers",
+      "- 产品页缺少区块: #specs",
+      "- 产品页缺少区块: #scenarios",
+      "- 产品页缺少区块: #delivery",
+      "- 产品页缺少区块: #verify",
+      "- 缺少「个人技术项目 / 无商业主体」定位声明",
+      "- 验证与复现区缺少可执行的复现命令",
+      "- 缺少未实测项或素材权属待确认声明",
+      "- 可替换文案标记或项目定位速览缺失",
+      "- 指标条 / 规格表缺失，或页面断言数与检查脚本不一致"
+    ]
+  },
+  {
+    "case": "case3",
+    "description": "把章节 zoom 改成常量",
+    "exit": 1,
+    "failed_assertions": [
+      "- 章节切换未真实递增镜头 zoom",
+      "- 进入近景未推进镜头"
+    ]
+  }
+]

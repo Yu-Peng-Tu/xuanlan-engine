@@ -1,0 +1,17 @@
+# Dependencies and build caches
+node_modules/
+.vite/
+.cache/
+
+# Local scratch output
+work/
+chrome-profile*/
+*.tgz
+
+# Environment files
+.env
+.env.*
+!/.env.example
+
+# OS files
+.DS_Store

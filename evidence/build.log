@@ -1,0 +1,13 @@
+
+> xuanlan-layered-engine-showcase@1.0.0 build
+> vite build
+
+vite v6.3.5 building for production...
+transforming...
+✓ 15 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  31.02 kB │ gzip:  10.59 kB
+dist/assets/index-CnlGK5ZM.css   25.04 kB │ gzip:   5.97 kB
+dist/assets/index-Bpg6bD3z.js   494.39 kB │ gzip: 127.37 kB
+✓ built in 9.16s

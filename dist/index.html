@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0c10" />
+  <!-- CONFIG: 项目定位文案。本项目为个人技术项目，不含任何企业主体信息 -->
+  <meta name="description" content="个人技术项目：把实时分层合成引擎做成产品级落地页。含可现场操作的实时 Demo、213 条自动断言、三组负向用例、逐项浏览器实测记录与完整工程边界说明。" />
+  <meta property="og:title" content="玄览引擎 · 产品化能力演示" />
+  <meta property="og:description" content="不用建模、不拍视频，让一张主视觉讲出完整的故事。个人技术项目，附实时运行的引擎 Demo 与可核查的验证记录。" />
+  <meta property="og:type" content="website" />
+  <title>玄览引擎 · 产品化能力演示 | 个人技术项目</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preload" as="image" href="./textures/xuanlan-cinematic-clean.jpg" fetchpriority="high" />
+  <noscript>
+    <style>
+      /* 无脚本时隐藏所有依赖 JS 的交互控件，避免留下「看得见却点不动」的假按钮；
+         静态成片、项目正文、技术规格、应用场景与验证说明全部保留可用。 */
+      .hero-near-trigger, .near-panel, .hero-toolbar, .chapter-indicator,
+      .deconstruct-toolbar, .deconstruct-panel, .chapter-jump,
+      .hero-intro .text-link, .layer-stack, .depth-overlay { display: none !important; }
+      .noscript-note {
+        position: relative; z-index: 30; margin: 0; padding: 0.7rem var(--pad);
+        background: #1b1d24; color: #f2ede3; font-size: 0.82rem; letter-spacing: 0.04em;
+        border-bottom: 1px solid rgba(216,169,75,0.4);
+      }
+    </style>
+  </noscript>
+  <script type="module" crossorigin src="./assets/index-DUh_4ItN.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C5h4Ug_n.css">
+</head>
+<body>
+  <a class="skip-link" href="#product">跳至产品内容</a>
+  <noscript><p class="noscript-note">当前已禁用 JavaScript：显示的是静态成片与完整项目正文。实时演示、图层解构等交互需要启用脚本；技术规格、应用场景、交付结构与验证说明仍可阅读。</p></noscript>
+
+  <div id="app" data-chapter="approach" data-view="panorama" data-mode="composed" data-focus="figure">
+    <!-- CONFIG: 项目标识与导航。无企业主体、无联系方式 -->
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="玄览引擎，返回顶部">
+        <span class="wordmark-mark" aria-hidden="true">览</span>
+        <span>玄览引擎<small>XUANLAN ENGINE · 个人技术项目</small></span>
+      </a>
+      <nav aria-label="项目导航">
+        <a href="#product">能力实现</a>
+        <a href="#demo">实时演示</a>
+        <a href="#specs">技术规格</a>
+        <a href="#scenarios">适用形态</a>
+        <a href="#verify">如何验证</a>
+      </nav>
+      <a class="header-cta" href="#verify">查看验证记录 <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main id="top">
+      <!-- ============ 首屏：产品价值主张 + 实时运行的引擎 Demo ============ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-stage" data-stage>
+          <!-- 静态首帧：不依赖脚本、WebGL 或纹理加载，永远可见 -->
+          <img class="hero-poster" src="./textures/xuanlan-cinematic-clean.jpg"
+               alt="演示案例画面：青衣剑客侧身立于断崖残台之上，银白披风向右侧展开，身后是破云而下的天光、翻涌云海与悬浮的东方楼阁" fetchpriority="high" />
+          <canvas id="scene-canvas" role="button" tabindex="0"
+                  aria-label="引擎实时渲染画布：三层独立图层合成。点击或按回车进入近景演示。"></canvas>
+          <div class="hero-shade" aria-hidden="true"></div>
+          <div class="hero-grain" aria-hidden="true"></div>
+
+          <p class="render-status" data-render-status role="status" hidden></p>
+
+          <div class="hero-copy">
+            <p class="eyebrow"><span>LIVE</span> 个人技术项目 · 产品化能力演示</p>
+            <!-- CONFIG: 主价值主张 -->
+            <h1 id="hero-title">让视觉，<br />自己讲故事<span class="stop">。</span></h1>
+            <div class="hero-intro">
+              <p>不用建模、不拍视频。一张主视觉，<br />即可产出章节化、可交互、全端可用的体验页。</p>
+              <!-- CONFIG: 两个 CTA 指向可核查证据与实时演示，无转化表单、无联系方式 -->
+              <div class="hero-cta-row">
+                <a class="btn-primary" href="#verify">查看验证记录 <span aria-hidden="true">↗</span></a>
+                <a class="btn-ghost" href="#demo">操作实时 Demo <span aria-hidden="true">↓</span></a>
+              </div>
+            </div>
+          </div>
+
+          <button class="hero-near-trigger" type="button" data-action="enter-near">
+            <span>LIVE DEMO / 实时渲染</span>
+            <strong>点击画面，体验近景与焦点</strong>
+            <i aria-hidden="true">↗</i>
+          </button>
+
+          <!-- 近景与焦点：真实改变镜头与焦点面 -->
+          <div class="near-panel" data-near-panel hidden>
+            <span class="panel-kicker">DEMO / 近景与焦点控制</span>
+            <div class="panel-actions" role="group" aria-label="近景与焦点控制">
+              <button type="button" data-action="back-panorama">← 返回全景</button>
+              <button type="button" data-focus="figure" aria-pressed="true">聚焦人物</button>
+              <button type="button" data-focus="army" aria-pressed="false">聚焦远景</button>
+            </div>
+            <p>移动指针感受三层视差 · 按 ESC 返回全景</p>
+          </div>
+
+          <!-- 全景状态下的焦点与解构入口 -->
+          <div class="hero-toolbar" role="group" aria-label="演示控制">
+            <button type="button" data-focus="figure" aria-pressed="true">聚焦人物</button>
+            <button type="button" data-focus="army" aria-pressed="false">聚焦远景</button>
+            <button type="button" data-action="toggle-deconstruct" aria-pressed="false">
+              <span data-mode-label>图层解构</span>
+            </button>
+          </div>
+
+          <div class="chapter-indicator" role="group" aria-label="叙事章节切换">
+            <button type="button" data-chapter-jump="0" aria-current="true"><span>壹</span>压境</button>
+            <button type="button" data-chapter-jump="1" aria-current="false"><span>贰</span>披风</button>
+            <button type="button" data-chapter-jump="2" aria-current="false"><span>叁</span>当关</button>
+          </div>
+
+          <div class="hero-coordinate" aria-hidden="true">
+            <span>案例 01 · 破云楼阁 / 原创概念成片</span>
+            <span>3 LAYERS / REAL-TIME COMPOSITE</span>
+          </div>
+          <div class="hero-bottom">
+            <div class="hero-tags"><span>纯静态部署</span><span>零后端</span><span>三级降级</span></div>
+            <a class="scroll-cue" href="#product"><span>查看能力实现</span><i aria-hidden="true"></i></a>
+            <span class="hero-format">REAL-TIME WEBGL<br />NOT A VIDEO</span>
+          </div>
+          <span class="hero-index" aria-hidden="true">01</span>
+          <p class="sr-only" aria-live="polite" data-chapter-live></p>
+        </div>
+      </section>
+
+      <!-- ============ 关键指标条（均为本工程可核查的真实数字） ============ -->
+      <section class="metric-strip" aria-label="项目关键指标">
+        <div><strong>3</strong><span>张独立图层 · 实时合成<br />非预渲染视频</span></div>
+        <div><strong>5</strong><span>项视觉资产<br />逐文件哈希校验</span></div>
+        <div><strong>213</strong><span>条自动断言<br />含 3 组负向用例</span></div>
+        <div><strong>0</strong><span>个后端依赖<br />纯静态任意托管</span></div>
+        <div><strong>3</strong><span>级降级路径<br />纹理 / WebGL / 脚本</span></div>
+      </section>
+
+      <!-- ============ 项目速览：给技术评审的 30 秒定位 ============ -->
+      <section class="project-brief" aria-label="项目定位速览">
+        <div><span>PROJECT / 项目性质</span><p>个人技术项目。产品官网是演示目标形态，不是商业主体；无企业信息、无虚构客户、无联系方式。</p></div>
+        <div><span>MY WORK / 完成范围</span><p>分层合成引擎、产品级落地页信息架构、状态机与交互、三级降级、自动检查与浏览器实测。</p></div>
+        <div><span>VERIFY / 核查方式</span><p><code>npm run check</code> · <code>evidence/</code> 逐项日志与截图 · 首屏实时 Demo 可现场操作。</p></div>
+      </section>
+
+      <!-- ============ 痛点 → 解法 ============ -->
+      <section class="biz" id="why" aria-labelledby="why-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">01 / PROBLEM &amp; APPROACH</span>
+            <h2 id="why-title">体验页的四个老问题，<br />换一种做法。</h2>
+            <p>这类交互体验页通常卡在「做得慢、跑不动、改不起、验不了」这四件事上。本项目把渲染、降级、状态与验收拆成独立模块，让每一件都有可核查的解法。</p>
+          </div>
+          <div class="pain-grid">
+            <article class="pain-item">
+              <span class="pain-num">01</span>
+              <p class="pain-from">靠视频撑场面</p>
+              <h3>改一版就要重渲染</h3>
+              <p class="pain-to">图层实时合成：镜头、焦点、章节都是运行时参数，换文案与叙事顺序不必重做素材。</p>
+            </article>
+            <article class="pain-item">
+              <span class="pain-num">02</span>
+              <p class="pain-from">WebGL 一失败就白屏</p>
+              <h3>低端机与内网直接白屏</h3>
+              <p class="pain-to">静态首帧先于脚本存在；纹理失败、WebGL 不可用、禁用 JS 三级降级，任何情况下都不留空白页。</p>
+            </article>
+            <article class="pain-item">
+              <span class="pain-num">03</span>
+              <p class="pain-from">交互写死在页面里</p>
+              <h3>换个品牌就得重写一遍</h3>
+              <p class="pain-to">纯函数状态机驱动全部交互，视觉资产与品牌文案是可替换配置，不与渲染逻辑耦合。</p>
+            </article>
+            <article class="pain-item">
+              <span class="pain-num">04</span>
+              <p class="pain-from">效果验收靠肉眼</p>
+              <h3>上线后才发现资源丢了</h3>
+              <p class="pain-to">自动检查逐文件校验资产、入口与交互数值；关键资源缺失或交互回归会真实返回非 0，不是摆设。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 产品能力 ============ -->
+      <section class="biz" id="product" aria-labelledby="product-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">02 / PRODUCT CAPABILITIES</span>
+            <h2 id="product-title">一套引擎，<br />四个可核查的能力。</h2>
+            <p>下面的每一条都指向本仓库中真实存在的模块与检查，不是效果描述。评审者可以直接读源码、跑检查、复现结果。</p>
+          </div>
+          <ol class="process-list">
+            <li>
+              <span>01</span>
+              <h3>实时分层合成</h3>
+              <p>自定义 GLSL 采样远景、披风、人物三张独立图层纹理（远景不透明、披风与人物带 alpha），各自整体平移而非逐像素形变；统一的 cover 映射与色彩空间直通，避免接缝与偏色。近景混入完整成片，放大后不露抠图边缘。</p>
+              <small>src/scene/shaders.js · src/scene/composite.js</small>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>章节化叙事状态机</h3>
+              <p>章节、近景、焦点、解构、单层查看、深度叠加收敛到一个纯函数 reducer，派生出真实的镜头缩放、焦点面、远景柔化与层位移。按钮状态、面板显示与文案同源，不会出现「样式变了状态没变」。</p>
+              <small>src/state/machine.js · src/ui/controls.js</small>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>全端渐进增强</h3>
+              <p>静态首帧先于任何脚本存在；纹理或 WebGL 失败时保留成片与全文；禁用 JavaScript 时静态样式、正文与导航依然完整。DPR 上限、页面隐藏停渲染、尺寸监听、上下文丢失与卸载释放、减少动态、键盘路径一并实现。</p>
+              <small>src/main.js · src/styles/base.css</small>
+            </li>
+            <li>
+              <span>04</span>
+              <h3>发布前自动质量网</h3>
+              <p><code>npm run check</code> 共 213 条断言：逐文件校验纹理哈希与字节数、入口引用、两套独立状态机语义一致性、禁用项扫描与模块引用图。删关键纹理、删入口、改坏章节缩放，三组负向用例均实测返回非 0。</p>
+              <small>scripts/check.mjs · evidence/negative-summary.txt</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ 实时演示导览 ============ -->
+      <section class="biz-dark demo-intro" id="demo" aria-labelledby="demo-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">03 / LIVE DEMO</span>
+            <h2 id="demo-title">下面这段画面，<br />是引擎在实时跑。</h2>
+            <p>不是截图，也不是录屏。当前首屏与下方三个章节由同一套 WebGL 合成与状态机驱动，评审者可以直接操作验证。建议在桌面浏览器中按以下顺序试一遍：</p>
+          </div>
+          <ol class="demo-steps">
+            <li><span>01</span><strong>切换章节</strong><p>点击「压境 / 披风 / 当关」，镜头缩放、平移与焦点面会真实变化。</p></li>
+            <li><span>02</span><strong>进入近景</strong><p>点击画面进入近景，再切「聚焦人物 / 聚焦远景」，对比远景的柔化朦胧与锐利通透。</p></li>
+            <li><span>03</span><strong>拆解图层</strong><p>点击「图层解构」，三层派生资产沿水平拉开，可单独查看任意一层或深度分段图。</p></li>
+            <li><span>04</span><strong>按 ESC</strong><p>退出近景与解构，返回当前章节全景。键盘路径与按钮等效。</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ B. 章节化镜头叙事（演示案例，保留交互契约） ============ -->
+      <section class="chapters" aria-label="演示案例 · 章节化镜头叙事">
+        <div class="chapter-stage" aria-hidden="true">
+          <img src="./textures/xuanlan-cinematic-clean.jpg" alt="" loading="lazy" />
+          <div class="chapter-stage-shade"></div>
+        </div>
+
+        <article class="chapter" id="chapter-0" data-chapter-section="0" aria-labelledby="ch0-title">
+          <div class="chapter-card" data-chapter-panel="0">
+            <span class="chapter-kicker">DEMO 01 / 全景 · 压境</span>
+            <h2 id="ch0-title">三层各自移动，<br />轮廓不变形。</h2>
+            <p>验证能力：刚性视差。远景云海使用最小视差幅度，视线自然落在主体上；三层各做整体平移，不产生橡皮式拉伸。</p>
+            <p class="chapter-note">工程价值：一张主视觉即可建立空间纵深，无需建模、无需多机位素材。</p>
+            <button type="button" class="chapter-jump" data-chapter-jump="1">进入下一章 · 中景 <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+
+        <article class="chapter" id="chapter-1" data-chapter-section="1" aria-labelledby="ch1-title">
+          <div class="chapter-card" data-chapter-panel="1">
+            <span class="chapter-kicker">DEMO 02 / 中景 · 披风</span>
+            <h2 id="ch1-title">分层关系，<br />可以被精确控制。</h2>
+            <p>验证能力：分段权重锚定。披风独立成层，根部按分段图锚定在人物上，外缘保留自由飘动；这是分段权重，不是逐像素位移。</p>
+            <p class="chapter-note">工程价值：素材中的可动元素能被单独调度，替换素材后仍保持正确遮挡关系。</p>
+            <button type="button" class="chapter-jump" data-chapter-jump="2">进入下一章 · 特写 <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+
+        <article class="chapter" id="chapter-2" data-chapter-section="2" aria-labelledby="ch2-title">
+          <div class="chapter-card" data-chapter-panel="2">
+            <span class="chapter-kicker">DEMO 03 / 特写 · 当关</span>
+            <h2 id="ch2-title">推到近处，<br />也不露接缝。</h2>
+            <p>验证能力：焦点面切换与成片混合。聚焦人物时远景散焦、去饱和并带一层焦外雾化；聚焦远景时远景恢复锐利通透、人物轻微退让。近景时混入完整成片，避免放大后露出抠图边缘。</p>
+            <p class="chapter-note">工程价值：同一套素材覆盖全景到特写，不必为不同版面准备多套图。</p>
+            <button type="button" class="chapter-jump" data-action="enter-near">进入人物近景 <span aria-hidden="true">↗</span></button>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ 图层结构可视化 ============ -->
+      <section class="deconstruct" id="layers" aria-labelledby="deconstruct-title">
+        <div class="section-head">
+          <span class="section-kicker">04 / ASSET STRUCTURE</span>
+          <h2 id="deconstruct-title">资产结构，<br />可以打开来看。</h2>
+          <p>引擎支持把合成画面拆回渲染实际使用的三层，用于素材验收、方案沟通与交付说明。这里展示的是本包由同一张成片派生、并真实参与渲染的三张图层，不是示意图 —— 点击「图层解构」逐层拉开，或单独查看一层。</p>
+        </div>
+
+        <div class="deconstruct-toolbar" role="group" aria-label="解构控制">
+          <button type="button" data-action="toggle-deconstruct" aria-pressed="false" class="primary-toggle">
+            <span data-mode-label>图层解构</span>
+          </button>
+          <button type="button" data-solo="all" aria-pressed="false">全部显示</button>
+          <button type="button" data-solo="far" aria-pressed="false">仅远景</button>
+          <button type="button" data-solo="cape" aria-pressed="false">仅披风</button>
+          <button type="button" data-solo="figure" aria-pressed="false">仅人物</button>
+          <button type="button" data-action="toggle-depth" aria-pressed="false">深度分段图</button>
+        </div>
+
+        <div class="deconstruct-panel" data-deconstruct-panel hidden>
+          <p class="deconstruct-hint">解构模式已开启：三层沿水平方向拉开，可单独查看。按 ESC 返回成片。</p>
+        </div>
+
+        <div class="layer-stack" data-layer-stack>
+          <!-- 由 DeconstructView 用真实纹理填充 -->
+        </div>
+        <img class="depth-overlay" data-depth-overlay src="./textures/xuanlan-background-depth.png"
+             alt="深度分段着色图：伪彩色分区，用于锚定披风与粗略分层" hidden loading="lazy" />
+
+        <aside class="honesty-note">
+          <h3>技术边界，写清楚</h3>
+          <p>这张深度图是<strong>伪彩色分段着色图</strong>，不是逐像素线性深度。R 通道提供粗略分层，B 通道标定披风自由度。引擎只把它用于分段权重，不做连续 UV 位移 —— 那会让人物轮廓像橡皮一样被拉伸，在既有美术素材上尤其不可接受。</p>
+          <p>远景底板里人物所占的区域，是用同一构图重绘了一张无人物背景再按人物蒙版替换进去的 —— 这一块是重绘内容，不是原始拍摄或独立绘制的背景，本项目如实标注、不冒充原图。由于重绘区的像素不再与成片逐点相同，三层按 alpha 叠加后与成片的平均像素误差为 3.99/255（约 1.6%），集中在人物边缘的羽化带；首屏成片另由 uPlate 全图保真输入参与合成，视差与放大时不会露出抠图接缝。</p>
+        </aside>
+
+        <div class="asset-facts">
+          <div><span>输入资产</span><strong>1 幅成片 + 3 张派生图层 + 1 张分段图</strong></div>
+          <div><span>渲染方式</span><strong>WebGL 实时合成，非预渲染视频</strong></div>
+          <div><span>交互状态</span><strong>3 章节 / 近景 / 双焦点 / 解构 / 单层 / 深度</strong></div>
+          <div><span>部署形态</span><strong>纯静态构建，零后端与外域依赖</strong></div>
+        </div>
+      </section>
+
+      <!-- ============ 技术规格 ============ -->
+      <section class="biz" id="specs" aria-labelledby="specs-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">05 / TECHNICAL SPECIFICATION</span>
+            <h2 id="specs-title">规格，<br />包含没做过的部分。</h2>
+            <p>以下为当前版本的真实规格。最后一行明确列出尚未实测的项目 —— 本项目不把「构建通过」当成性能、兼容性与无障碍验收通过。</p>
+          </div>
+          <table class="spec-table">
+            <caption class="sr-only">演示引擎技术规格表</caption>
+            <tbody>
+              <tr><th scope="row">部署形态</th><td>纯静态文件，相对路径引用；无后端、无数据库、无第三方运行时；任意静态服务器 / CDN / 内网均可托管</td></tr>
+              <tr><th scope="row">渲染</th><td>WebGL 兼容路径 + 自定义 GLSL，Three.js 作为渲染骨架；设备像素比上限 1.75；页面隐藏时停止渲染循环</td></tr>
+              <tr><th scope="row">首屏</th><td>静态 <code>&lt;img&gt;</code> 首帧先于脚本存在，不依赖 WebGL 与纹理加载；主视觉预加载</td></tr>
+              <tr><th scope="row">降级路径</th><td>纹理加载失败 → 静态成片；WebGL 不可用 → 静态模式；禁用 JavaScript → 完整正文、排版与导航</td></tr>
+              <tr><th scope="row">输入资产</th><td>1 幅生成成片、3 张由其派生的独立图层（远景不透明 / 披风与人物 RGBA）、1 张分段编码图（2048 × 1152）；逐文件哈希与字节数校验，三层叠加与成片平均像素误差 3.99/255</td></tr>
+              <tr><th scope="row">交互状态</th><td>3 章节 / 近景 / 双焦点 / 解构 / 单层查看 / 深度叠加，由纯函数状态机驱动，参数可观测</td></tr>
+              <tr><th scope="row">无障碍</th><td>语义化按钮、键盘可达、<code>aria-pressed</code> / <code>aria-current</code> 同步、<code>prefers-reduced-motion</code>、跳转链接</td></tr>
+              <tr><th scope="row">质量保障</th><td>213 条自动断言；三组负向用例（删关键纹理 / 删入口 / 改坏章节缩放）实测均返回非 0</td></tr>
+              <tr class="spec-caveat"><th scope="row">尚未实测</th><td>真机触屏、读屏器、跨浏览器兼容、FPS / 显存 / 加载耗时、真实 GPU 上下文丢失后的视觉恢复、Lighthouse 评分</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ 应用场景 ============ -->
+      <section class="biz-dark" id="scenarios" aria-labelledby="scenarios-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">06 / USE CASES</span>
+            <h2 id="scenarios-title">适合放在，<br />需要被认真看的地方。</h2>
+            <p>以下为引擎适用形态的能力说明，属产品化演示配置，不代表已有客户案例或商业合作。每个场景都能用同一套引擎承载，差别只在素材与叙事配置。</p>
+          </div>
+          <div class="scenario-grid">
+            <article class="scenario-card">
+              <span>01 / BRAND LAUNCH</span>
+              <h3>品牌与新品发布页</h3>
+              <p>视觉定稿即可上线互动页，不必等视频渲染与压缩。章节化镜头让卖点按顺序被看见，而不是一屏塞完。</p>
+            </article>
+            <article class="scenario-card">
+              <span>02 / CULTURAL IP</span>
+              <h3>文化 IP 与数字展陈</h3>
+              <p>把一幅概念图拆成可逐层讲解的线上展品；解构与单层查看可直接用于导览、教育内容与幕后制作说明。</p>
+            </article>
+            <article class="scenario-card">
+              <span>03 / PRODUCT STORY</span>
+              <h3>产品故事与专题长页</h3>
+              <p>用镜头推进替代长图滚动，焦点面切换引导阅读重心；纯静态产物易于嵌入现有官网与营销落地页。</p>
+            </article>
+            <article class="scenario-card">
+              <span>04 / EXHIBITION</span>
+              <h3>展厅大屏与内网环境</h3>
+              <p>无外部服务依赖，内网可跑；断网或设备不支持 WebGL 时仍有静态成片与完整正文，不出现空白屏。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 交付与服务 ============ -->
+      <section class="biz" id="delivery" aria-labelledby="delivery-title">
+        <div class="biz-inner">
+          <div class="section-head">
+            <span class="section-kicker">07 / DELIVERY</span>
+            <h2 id="delivery-title">交付的是工程，<br />不只是一个页面。</h2>
+            <p>本区只列仓库中真实存在、可复核的工程内容。这是个人项目，不预设服务承诺、周期或商务条款。</p>
+          </div>
+          <div class="delivery-grid">
+            <div><span>交付物</span><h3>完整源码与产物</h3><p>Vite 工程源码、生产构建 <code>dist/</code>、逐文件资产清单（含 SHA-256）、自动检查脚本、验证记录与部署说明。</p></div>
+            <div><span>部署</span><h3>任意静态托管</h3><p>相对路径构建，无需 Node 运行时；上传到静态服务器、对象存储或 CDN 即可访问，也可整体放入内网。</p></div>
+            <div><span>定制</span><h3>文案与素材可替换</h3><p>页面文案与配色、图层资产、章节数量与镜头参数、交互模块增减均可配置；状态机与渲染逻辑无需重写。</p></div>
+            <div><span>验收</span><h3>可复现的检查</h3><p><code>npm run check</code> + <code>npm run build</code> + 真实浏览器实测。关键资源缺失与交互回归会真实失败，验收不靠口头确认。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 验证与复现：给技术评审的有效 CTA ============ -->
+      <!-- CONFIG: 个人项目，无联系表单、无邮箱、无企业主体 -->
+      <section class="contact-band" id="verify" aria-labelledby="verify-title">
+        <div class="biz-inner">
+          <span class="section-kicker">08 / REPRODUCE &amp; VERIFY</span>
+          <h2 id="verify-title">每一条声称，<br />都能自己跑一遍。</h2>
+          <p>这是一个面向技术评审的个人项目：产品官网是演示目标形态，不是商业主体。下面的命令、日志与截图都出自同一份仓库，页面上的每个数字都能逐项对回。</p>
+
+          <div class="verify-cmd">
+            <span>在仓库根目录执行</span>
+            <pre><code>npm ci &amp;&amp; npm run check &amp;&amp; npm run build</code></pre>
+            <p>预期结果：213 条断言全部通过、构建 EXIT=0，<code>dist/</code> 与源码由同一次产出生成。</p>
+          </div>
+
+          <div class="contact-actions">
+            <a class="btn-primary" href="#demo">回到实时 Demo <span aria-hidden="true">↑</span></a>
+            <a class="btn-ghost" href="#specs">查看技术规格 <span aria-hidden="true">↑</span></a>
+          </div>
+
+          <div class="config-note">
+            <strong>［项目边界声明］</strong>
+            <p>本页为<strong>个人技术项目</strong>，用于展示「把实时渲染引擎做成产品级落地页」的工程能力：价值主张、适用形态与交付结构均为产品化演示配置，<strong>不代表真实企业主体、资质、客户案例或商业合作</strong>。演示视觉素材为本项目用图像生成工具产生的原创概念成片及其派生分层，未使用第三方作品素材；生成平台对输出物的商用条款<strong>待确认</strong>，仅用于个人技术演示，不作可商用声明。真机触屏、读屏器、跨浏览器、FPS / 显存 / 加载耗时、真实 GPU 上下文恢复与 Lighthouse 评分<strong>尚未实测</strong>，已在技术规格中如实标注。</p>
+          </div>
+
+          <p class="verify-paths">仓库内可核查文件：<code>evidence/check.log</code> · <code>evidence/build.log</code> · <code>evidence/negative-summary.txt</code> · <code>evidence/VALIDATION.md</code> · <code>evidence/browser-validation.json</code> · <code>evidence/screenshots/</code></p>
+        </div>
+      </section>
+    </main>
+
+    <!-- CONFIG: 页脚项目定位与边界声明，不含企业主体 -->
+    <footer class="site-footer">
+      <div>
+        <span class="footer-label">INDEPENDENT PROJECT / CASE 01</span>
+        <p>玄览引擎<span class="stop">。</span></p>
+      </div>
+      <div class="footer-note">
+        产品化能力演示 · 实时分层合成 · 纯静态交付<br />
+        <span class="legal-note">个人技术项目，无企业主体、无虚构客户与联系方式；产品名、价值主张与适用形态均为演示配置。演示视觉素材为本项目用图像生成工具产生的原创概念成片及其派生分层，未使用第三方作品素材；生成平台对输出物的商用条款<strong>待确认</strong>，仅用于个人技术演示，不作可商用声明。未实测项见「技术规格」与验证记录。</span>
+      </div>
+      <a class="text-link light" href="#top">回到顶部 <span aria-hidden="true">↑</span></a>
+    </footer>
+  </div>
+
+</body>
+</html>
